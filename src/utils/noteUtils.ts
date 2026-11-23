@@ -39,6 +39,7 @@ export const getNotesFunction = async (options: GetNotesFunction) => {
 
   return notes.map((note) => ({
     ...note,
-    ...(userId && { noteInteraction: note.noteInteraction[0] || undefined }),
+    noteInteraction: userId ? note.noteInteraction : [],
+    ...note.noteInteractionCounter,
   }));
 };
