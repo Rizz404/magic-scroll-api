@@ -25,13 +25,6 @@ export const createNote: RequestHandler = async (req, res) => {
     const isPrivateBool = typeof isPrivate === "boolean" ? isPrivate : isPrivate === "true";
     const tagsParsed = typeof tags === "string" ? JSON.parse(tags) : tags;
 
-    const randomImages = [
-      "https://i.pinimg.com/236x/f6/77/b0/f677b029c3b794a5fada3f884f91522b.jpg",
-      "https://i.pinimg.com/236x/c6/20/50/c62050082632c18cf1c838120f268bfb.jpg",
-      "https://i.pinimg.com/236x/9f/c2/14/9fc214fa94964af4a6728cf3571cd795.jpg",
-      "https://i.pinimg.com/236x/01/dd/0c/01dd0c332d164345145156d464498df1.jpg",
-    ];
-    const randomIndex = Math.floor(Math.random() * randomImages.length);
 
     // * Many to many relation itu otomatis nambakan note ke tag juga
     const newNote = await prisma.note.create({
@@ -40,7 +33,7 @@ export const createNote: RequestHandler = async (req, res) => {
         studyId,
         title,
         content,
-        thumbnailImage: image ? image.firebaseUrl : randomImages[randomIndex],
+        thumbnailImage: image ? image.firebaseUrl : "/covers/notes.svg",
         isPrivate: isPrivateBool ? isPrivateBool : false,
         notePermission: {
           create: { userId: id, permission: "READ_WRITE" },
@@ -301,7 +294,7 @@ export const getNoteById: RequestHandler = async (req, res) => {
 
     if (!note) return res.status(404).json({ message: "Note not found" });
 
-    res.json(note);
+    res.json({ ...note, ...note.noteInteractionCounter, noteInteraction: userId ? note.noteInteraction : [] });
   } catch (error) {
     res.status(500).json({ message: getErrorMessage(error) });
   }

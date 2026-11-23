@@ -128,7 +128,7 @@ model Study {
   id          String   @id @default(cuid()) @db.VarChar(30)
   name        String   @unique @db.VarChar(255)
   description String
-  image       String   @default("https://i.pinimg.com/236x/a2/6a/27/a26a27a5ff6a2cb80d5b872a73d1413b.jpg")
+  image       String   @default("/covers/notes.svg")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

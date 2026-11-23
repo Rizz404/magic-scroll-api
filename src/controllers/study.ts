@@ -11,7 +11,7 @@ export const createStudy: RequestHandler = async (req, res) => {
     const image = req.file as FileWithFirebase;
 
     const newStudy = await prisma.study.create({
-      data: { name, description, ...(image && { image: image.firebaseUrl }) },
+      data: { name, description, image: image ? image.firebaseUrl : "/covers/notes.svg" },
     });
 
     res.status(201).json({ message: "Create study successful", data: newStudy });
