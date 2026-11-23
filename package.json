@@ -51,5 +51,12 @@
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
+  },
+  "allowScripts": {
+    "@prisma/client@5.12.1": true,
+    "@prisma/engines@5.12.1": true,
+    "prisma@5.12.1": true,
+    "bcrypt@5.1.1": true,
+    "protobufjs@7.2.6": true
   }
 }
