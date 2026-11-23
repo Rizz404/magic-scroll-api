@@ -1,5 +1,5 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "@prisma/client/edge";
+import { PrismaClient } from "@prisma/client";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Pool } from "pg";
 
@@ -9,6 +9,8 @@ import { Pool } from "pg";
 // const poll = new Pool({ connectionString });
 // const adapter = new PrismaPg(poll);
 // ? Figure it out later okay?
-const prisma = new PrismaClient().$extends(withAccelerate());
+const prisma: PrismaClient = process.env.DATABASE_URL?.startsWith("prisma://")
+  ? new PrismaClient().$extends(withAccelerate()) as unknown as PrismaClient
+  : new PrismaClient();
 
 export default prisma;
